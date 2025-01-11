@@ -64,6 +64,7 @@ export const property = <This, Value>(
          * accessor count = 10;
          */
         const initialValue = value;
+        const element = this as HTMLElement;
 
         /**
          * If accessor use private #variable, then html attribute value won't be used
@@ -71,14 +72,15 @@ export const property = <This, Value>(
          accessor #count = 10;
          */
         if (context.private) {
+          // Set DOM attribute with property value
+          element.setAttribute(attribute.name, String(initialValue));
           return initialValue;
         }
 
         /**
          * Retrieve DOM custom element argument data
-         * <my-counter count="10"></my-component>
+         * <my-counter count="10"></my-counter>
          */
-        const element = this as HTMLElement;
         const attributeValue = element.getAttribute(attribute.name);
 
         /**
