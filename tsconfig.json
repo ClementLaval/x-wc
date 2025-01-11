@@ -14,7 +14,8 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "verbatimModuleSyntax": true
   },
   "include": [
     "src"
