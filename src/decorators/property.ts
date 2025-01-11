@@ -1,5 +1,6 @@
 import type { PropertyDecoratorMetadata } from '../types';
 import { Attribute } from '../attribute/attribute';
+import { convertAttribute } from '../convertors/convert-attribute';
 
 /**
  * Use @property() decorator on a custom element variable to bind
@@ -52,6 +53,44 @@ export const property = <This, Value>(
       } satisfies PropertyDecoratorMetadata,
     });
 
-    return {};
+    /**
+     * Set new accessor definition
+     */
+    return {
+      init(this: This, value: Value): Value {
+        /**
+         * Retrieve initial value passed on accessor
+         * @property()
+         * accessor count = 10;
+         */
+        const initialValue = value;
+
+        /**
+         * If accessor use private #variable, then html attribute value won't be used
+         @property()
+         accessor #count = 10;
+         */
+        if (context.private) {
+          return initialValue;
+        }
+
+        /**
+         * Retrieve DOM custom element argument data
+         * <my-counter count="10"></my-component>
+         */
+        const element = this as HTMLElement;
+        const attributeValue = element.getAttribute(attribute.name);
+
+        /**
+         * Convert attribute value into selected type
+         */
+        const parsedAttribute = convertAttribute(initialValue, attributeValue);
+
+        /**
+         * If DOM attribute value is falsy, return initial value from custom element's property
+         */
+        return parsedAttribute ?? initialValue;
+      },
+    };
   };
 };
