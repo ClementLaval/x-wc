@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "Esnext",
+    "target": "Esnext",
+    "lib": [
+      "Esnext",
+      "DOM",
+      "DOM.Iterable",
+      "esnext.decorators"
+    ],
+    "declaration": true,
+    "strict": true,
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/*.test.ts"
+  ]
+}
+

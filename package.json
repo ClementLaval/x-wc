@@ -1,0 +1,53 @@
+{
+  "name": "x-wc",
+  "version": "0.0.1",
+  "description": "Enhance your static HTML declaratively with X-WC. Easily add dynamic features through web components for an enriched and extensible user experience.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "html",
+    "javascript",
+    "typescript",
+    "decorators",
+    "web",
+    "component",
+    "custom",
+    "elements"
+  ],
+  "author": "Clément Laval",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClementLaval/x-wc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ClementLaval/x-wc/issues"
+  },
+  "homepage": "https://github.com/ClementLaval/x-wc#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/js": "^9.18.0",
+    "eslint": "^9.18.0",
+    "husky": "^9.1.7",
+    "jsdom": "^26.0.0",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.19.1",
+    "vitest": "^2.1.8"
+  }
+}
