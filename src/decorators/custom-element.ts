@@ -1,4 +1,4 @@
-import type { Constructor } from '../types';
+import type { ClassDecoratorMetadata, Constructor } from '../types';
 
 /**
  * Use the @customElement decorator to register your custom element.
@@ -39,7 +39,7 @@ export type CustomElementDecorator = (
 ) => void;
 
 export const customElement: CustomElementDecorator =
-  (tagName, options) => (target, _context) => {
+  (tagName, options) => (target, context) => {
     // Ensure customElement extending HTMLElement
     if (!(target.prototype instanceof HTMLElement)) {
       throw new Error(
@@ -47,6 +47,21 @@ export const customElement: CustomElementDecorator =
       );
     }
 
+    // Ensure that class is named
+    if (!context.name) {
+      throw new Error(
+        'Class must have a name. Anonymous classes are not allowed.'
+      );
+    }
+
+    // Register class metadata
+    Object.assign(context.metadata, {
+      [context.name]: {
+        name: context.name,
+        kind: context.kind,
+      } satisfies ClassDecoratorMetadata,
+    });
+    
     // If custom element is not yet registered
     if (!customElements.get(tagName)) {
       // Define custom element globally
