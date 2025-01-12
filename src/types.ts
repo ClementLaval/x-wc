@@ -15,6 +15,7 @@ export type ClassDecoratorMetadata = {
 export type PropertyDecoratorMetadata = {
   name: string;
   kind: 'accessor';
+  private: boolean;
 };
 
 export type EventDecoratorMetadata = {

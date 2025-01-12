@@ -1,4 +1,5 @@
 import type { ClassDecoratorMetadata, Constructor } from '../types';
+import { initInternalDecorators } from '../init';
 
 /**
  * Use the @customElement decorator to register your custom element.
@@ -61,7 +62,10 @@ export const customElement: CustomElementDecorator =
         kind: context.kind,
       } satisfies ClassDecoratorMetadata,
     });
-    
+
+    // Init internal decorators behaviors
+    initInternalDecorators(target, context);
+
     // If custom element is not yet registered
     if (!customElements.get(tagName)) {
       // Define custom element globally

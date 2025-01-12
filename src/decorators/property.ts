@@ -50,6 +50,7 @@ export const property = <This, Value>(
       [attribute.name]: {
         name: attribute.name,
         kind: context.kind,
+        private: attribute.isPrivate(),
       } satisfies PropertyDecoratorMetadata,
     });
 

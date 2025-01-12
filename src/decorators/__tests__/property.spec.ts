@@ -47,6 +47,7 @@ describe('property', () => {
       count: {
         name: 'count',
         kind: 'accessor',
+        private: false,
       },
     };
 
@@ -74,6 +75,7 @@ describe('property', () => {
       count: {
         name: 'count',
         kind: 'accessor',
+        private: true,
       },
     };
 
