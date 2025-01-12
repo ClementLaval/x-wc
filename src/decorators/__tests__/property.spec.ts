@@ -83,7 +83,7 @@ describe('property', () => {
 
   test('should add web component added to document body', () => {
     // Given a web component on DOM
-    const customElementDOM = document.createElement('my-counter');
+    const customElementDOM = document.createElement('my-counter') as Counter;
 
     @customElement('my-counter')
     class Counter extends HTMLElement {}
@@ -99,8 +99,28 @@ describe('property', () => {
 
   test('property initial value should be DOM value if public', () => {
     // Given a web component on DOM
-    const customElementDOM = document.createElement('my-counter');
-    customElementDOM.setAttribute('count', '32');
+    const customElementDOM = document.createElement('my-counter') as Counter;
+    customElementDOM.setAttribute('count', '32'); // initial value
+
+    @customElement('my-counter')
+    class Counter extends HTMLElement {
+      @property()
+      accessor count = 10; // fallback value
+    }
+
+    // Append the custom element to the document body
+    document.body.appendChild(customElementDOM);
+
+    // Then check if count initial value is DOM one
+    expect(customElementDOM.count).toBe(32);
+    expect(typeof customElementDOM.count).toBe('number');
+    // And reflected on DOM attribute
+    expect(customElementDOM.getAttribute('count')).toBe('32');
+  });
+
+  test('property initial value should property fallback value if the DOM value is empty', () => {
+    // Given a web component on DOM
+    const customElementDOM = document.createElement('my-counter') as Counter;
 
     @customElement('my-counter')
     class Counter extends HTMLElement {
@@ -111,38 +131,93 @@ describe('property', () => {
     // Append the custom element to the document body
     document.body.appendChild(customElementDOM);
 
-    // Wait for the custom element to be connected to the DOM
-    const customElementWC = document.querySelector('my-counter') as Counter;
-    const customElementHTML = document.querySelector(
-      'my-counter'
-    ) as HTMLElement;
-
-    // Then check if count initial value is DOM one
-    expect(customElementWC.count).toBe(32);
+    // Then check if count initial value is property fallback
+    expect(customElementDOM.count).toBe(10);
+    expect(typeof customElementDOM.count).toBe('number');
     // And reflected on DOM attribute
-    expect(customElementHTML.getAttribute('count')).toBe('32');
+    expect(customElementDOM.getAttribute('count')).toBe('10');
   });
 
-  test('property initial value should be property value if private', () => {
+  test('property initial value should be the property value if private over DOM attribute', () => {
     // Given a web component on DOM
-    const customElementDOM = document.createElement('my-counter');
+    const customElementDOM = document.createElement('my-counter') as Counter;
     customElementDOM.setAttribute('count', '32');
 
     @customElement('my-counter')
     class Counter extends HTMLElement {
       @property()
       accessor #count = 10; // private property
+
+      getPrivateCount() {
+        return this.#count;
+      }
     }
 
     // Append the custom element to the document body
     document.body.appendChild(customElementDOM);
 
-    // Wait for the custom element to be connected to the DOM
-    const customElementHTML = document.querySelector(
-      'my-counter'
-    ) as HTMLElement;
-
+    // Then check if count initial value is private property one
+    expect(customElementDOM.getPrivateCount()).toBe(10);
+    expect(typeof customElementDOM.getPrivateCount()).toBe('number');
     // Then, the property should be prioritized, and the DOM attribute should be set to the same value
-    expect(customElementHTML.getAttribute('count')).toBe('10');
+    expect(customElementDOM.getAttribute('count')).toBe('10');
+  });
+
+  test('accessor set function should update internal custom element + DOM attribute value', () => {
+    // Given a web component on DOM
+    const customElementDOM = document.createElement('my-counter') as Counter;
+    customElementDOM.setAttribute('count', '10');
+
+    @customElement('my-counter')
+    class Counter extends HTMLElement {
+      @property()
+      accessor count = 0;
+
+      increment() {
+        this.count++;
+      }
+    }
+
+    // Append the custom element to the document body
+    document.body.appendChild(customElementDOM);
+
+    // Update count by using increment method
+    customElementDOM.increment();
+
+    // Then new value should be reflected on DOM + property with respective types
+    expect(customElementDOM.getAttribute('count')).toBe('11');
+    expect(customElementDOM.count).toBe(11);
+    expect(typeof customElementDOM.count).toBe('number');
+  });
+
+  test('accessor set function should update internal custom element + DOM attribute value with private', () => {
+    // Given a web component on DOM
+    const customElementDOM = document.createElement('my-counter') as Counter;
+    customElementDOM.setAttribute('count', '10');
+
+    @customElement('my-counter')
+    class Counter extends HTMLElement {
+      @property()
+      accessor #count = 0;
+
+      increment() {
+        this.#count++;
+      }
+
+      getPrivateCount() {
+        return this.#count;
+      }
+    }
+
+    // Append the custom element to the document body
+    document.body.appendChild(customElementDOM);
+
+    // Update count by using increment method
+    customElementDOM.increment();
+
+    // Then new value should be reflected on DOM + property with respective types
+    expect(customElementDOM.getAttribute('count')).toBe('1');
+    expect(customElementDOM.getPrivateCount()).toBe(1);
+    expect(typeof customElementDOM.getPrivateCount()).toBe('number');
   });
 });

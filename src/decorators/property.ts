@@ -90,8 +90,33 @@ export const property = <This, Value>(
 
         /**
          * If DOM attribute value is falsy, return initial value from custom element's property
+         * Update DOM attribute with property value
          */
-        return parsedAttribute ?? initialValue;
+        if (!parsedAttribute) {
+          element.setAttribute(attribute.name, String(initialValue));
+          return initialValue;
+        }
+
+        /**
+         * Otherwise return the parsed DOM attribute value
+         */
+        return parsedAttribute;
+      },
+      get: function (this: This): Value {
+        return target.get.call(this);
+      },
+      set: function (this: This, value: Value) {
+        /**
+         * Reflect html attribute with the new value
+         * By setting html attribute, it does active web component reactivity
+         * Class value are automatically updated
+         */
+        // Update the internal property value
+        target.set.call(this, value);
+
+        // Reflect the change in the DOM attribute
+        const rootElement = this as HTMLElement;
+        rootElement.setAttribute(attribute.name, String(value));
       },
     };
   };
