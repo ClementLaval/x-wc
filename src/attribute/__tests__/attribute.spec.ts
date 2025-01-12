@@ -61,4 +61,12 @@ describe('attribute', () => {
     // Then the isPrivate method should return true
     expect(attribute.isPrivate()).toBe(true);
   });
+
+  test('should return x-attribute name', () => {
+    // Given the attribute with public name
+    const attribute = new Attribute('count');
+
+    // Then should return x-named
+    expect(attribute.xName()).toBe('x-count');
+  });
 });

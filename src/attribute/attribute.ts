@@ -26,4 +26,8 @@ export class Attribute {
   isPrivate(): boolean {
     return this._name.startsWith('#');
   }
+
+  xName(): string {
+    return `x-${this.name}`;
+  }
 }

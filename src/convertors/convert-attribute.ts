@@ -15,25 +15,25 @@ import { stringToObject } from './stringToObject';
  *
  */
 export function convertAttribute<Value>(
-  initialValue: Value,
-  attribute: string | null
+  propertyValue: Value,
+  attributeValue: string | null
 ): Value | null {
-  if (attribute == null) {
+  if (attributeValue == null) {
     return null;
   }
 
-  switch (typeof initialValue) {
+  switch (typeof propertyValue) {
     case 'string': {
-      return stringToString(attribute) as Value;
+      return stringToString(attributeValue) as Value;
     }
     case 'number': {
-      return stringToNumber(attribute) as Value;
+      return stringToNumber(attributeValue) as Value;
     }
     case 'boolean': {
-      return stringToBoolean(attribute) as Value;
+      return stringToBoolean(attributeValue) as Value;
     }
     case 'object': {
-      return stringToObject(attribute) as Value;
+      return stringToObject(attributeValue) as Value;
     }
     default:
       throw new Error('Can not detect property type');

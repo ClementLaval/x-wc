@@ -23,7 +23,6 @@ export function initObservedAttributes(
   /**
    * Add accessors to observedAttributes:
    *  - watch properties and enable reactivity through attributeChangedCallback()
-   *  - only register none-private properties
    */
   // Retrieve existing observedAttributes or initialize an empty array
   const observedAttributes =
