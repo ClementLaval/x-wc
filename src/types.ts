@@ -5,6 +5,7 @@ export type Constructor<T> = {
 export type DecoratorMetadata =
   | ClassDecoratorMetadata
   | PropertyDecoratorMetadata
+  | ElementDecoratorMetadata
   | EventDecoratorMetadata;
 
 export type ClassDecoratorMetadata = {
@@ -14,12 +15,17 @@ export type ClassDecoratorMetadata = {
 
 export type PropertyDecoratorMetadata = {
   name: string;
-  kind: 'accessor';
+  kind: 'property';
   private: boolean;
+};
+
+export type ElementDecoratorMetadata = {
+  name: string;
+  kind: 'element';
 };
 
 export type EventDecoratorMetadata = {
   name: string;
-  kind: 'method';
+  kind: 'event';
   type: Event['type'];
 };

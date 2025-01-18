@@ -1,10 +1,12 @@
 import type { Constructor, DecoratorMetadata, PropertyDecoratorMetadata } from '../types';
 import { convertAttribute } from '../convertors/convert-attribute';
+import { executeElements } from './execute-elements';
 
 /**
  * Update attributeChangedCallback:
  *  - callback called when reactive property present in observedAttributes is changed
- *  - update DOM
+ *  - execute existing callback first
+ *  - only update none-private properties
  */
 export function initAttributeChangedCallback(
   target: CustomElementConstructor,
@@ -14,9 +16,9 @@ export function initAttributeChangedCallback(
    * Retrieve properties from metadata
    */
   const properties = Object.values(
-    context.metadata as DecoratorMetadata[]
+    context.metadata as Record<string, DecoratorMetadata>
   ).reduce((acc: PropertyDecoratorMetadata[], metadata) => {
-    if (metadata.kind === 'accessor') {
+    if (metadata.kind === 'property') {
       acc.push(metadata);
     }
     return acc;
@@ -74,5 +76,8 @@ export function initAttributeChangedCallback(
 
     // update property value
     Reflect.set(this, accessor, parsedValue);
+
+    // execute elements
+    executeElements(this, context);
   };
 }

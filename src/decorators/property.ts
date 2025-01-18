@@ -20,10 +20,9 @@ type PropertyDefinitionOptions = {};
 
 const defaultOptions: PropertyDefinitionOptions = {};
 
-export const property = <This, Value>(
-  options: PropertyDefinitionOptions = defaultOptions
-) => {
-  return (
+export const property =
+  <This, Value>(options: PropertyDefinitionOptions = defaultOptions) =>
+  (
     target: ClassAccessorDecoratorTarget<This, Value>,
     context: ClassAccessorDecoratorContext<This, Value>
   ): ClassAccessorDecoratorResult<This, Value> => {
@@ -49,7 +48,7 @@ export const property = <This, Value>(
     Object.assign(context.metadata, {
       [attribute.name]: {
         name: attribute.name,
-        kind: context.kind,
+        kind: 'property',
         private: attribute.isPrivate(),
       } satisfies PropertyDecoratorMetadata,
     });
@@ -121,4 +120,3 @@ export const property = <This, Value>(
       },
     };
   };
-};

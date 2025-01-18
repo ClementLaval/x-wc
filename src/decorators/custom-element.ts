@@ -59,7 +59,7 @@ export const customElement: CustomElementDecorator =
     Object.assign(context.metadata, {
       [context.name]: {
         name: context.name,
-        kind: context.kind,
+        kind: 'class',
       } satisfies ClassDecoratorMetadata,
     });
 
@@ -69,6 +69,8 @@ export const customElement: CustomElementDecorator =
     // If custom element is not yet registered
     if (!customElements.get(tagName)) {
       // Define custom element globally
-      customElements.define(tagName, target, options);
+      context.addInitializer(() => {
+        customElements.define(tagName, target, options);
+      });
     }
   };

@@ -12,9 +12,9 @@ export function initObservedAttributes(
    * Retrieve properties from metadata
    */
   const properties = Object.values(
-    context.metadata as DecoratorMetadata[]
+    context.metadata as Record<string, DecoratorMetadata>
   ).reduce((acc: PropertyDecoratorMetadata[], metadata) => {
-    if (metadata.kind === 'accessor') {
+    if (metadata.kind === 'property') {
       acc.push(metadata);
     }
     return acc;

@@ -41,12 +41,12 @@ describe('property', () => {
     // Define the expected metadata
     const expectedMetadata = {
       Counter: {
-        kind: 'class',
         name: 'Counter',
+        kind: 'class',
       },
       count: {
         name: 'count',
-        kind: 'accessor',
+        kind: 'property',
         private: false,
       },
     };
@@ -69,12 +69,12 @@ describe('property', () => {
     // Define the expected metadata
     const expectedMetadata = {
       Counter: {
-        kind: 'class',
         name: 'Counter',
+        kind: 'class',
       },
       count: {
         name: 'count',
-        kind: 'accessor',
+        kind: 'property',
         private: true,
       },
     };
@@ -161,7 +161,7 @@ describe('property', () => {
     // Then check if count initial value is private property one
     expect(customElementDOM.getPrivateCount()).toBe(10);
     expect(typeof customElementDOM.getPrivateCount()).toBe('number');
-    
+
     // Then, the property should be prioritized, and the DOM attribute should be set to the same value
     expect(customElementDOM.getAttribute('count')).toBe('10');
   });
