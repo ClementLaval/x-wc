@@ -1,6 +1,7 @@
 import type { PropertyDecoratorMetadata } from '../types';
 import { Attribute } from '../attribute/attribute';
 import { convertAttribute } from '../convertors/convert-attribute';
+import { stringifyValue } from '../convertors/stringifyValue';
 
 /**
  * Use @property() decorator on a custom element variable to bind
@@ -67,13 +68,13 @@ export const property =
         const element = this as HTMLElement;
 
         /**
-         * If accessor use private #variable, then html attribute value won't be used
-         @property()
-         accessor #count = 10;
-         */
+           * If accessor use private #variable, then html attribute value won't be used
+           @property()
+           accessor #count = 10;
+           */
         if (context.private) {
           // Set DOM attribute with property value
-          element.setAttribute(attribute.name, String(initialValue));
+          element.setAttribute(attribute.name, stringifyValue(initialValue));
           return initialValue;
         }
 
@@ -82,6 +83,7 @@ export const property =
          * <my-counter count="10"></my-counter>
          */
         const attributeValue = element.getAttribute(attribute.name);
+        console.log(attributeValue);
 
         /**
          * Convert attribute value into selected type
@@ -93,7 +95,7 @@ export const property =
          * Update DOM attribute with property value
          */
         if (!parsedAttribute) {
-          element.setAttribute(attribute.name, String(initialValue));
+          element.setAttribute(attribute.name, stringifyValue(initialValue));
           return initialValue;
         }
 
@@ -116,7 +118,7 @@ export const property =
 
         // Reflect the change in the DOM attribute
         const rootElement = this as HTMLElement;
-        rootElement.setAttribute(attribute.name, String(value));
+        rootElement.setAttribute(attribute.name, stringifyValue(value));
       },
     };
   };

@@ -3,6 +3,7 @@ import type {
   DecoratorMetadata,
   PropertyDecoratorMetadata,
 } from '../../types';
+import { stringifyValue } from '../../convertors/stringifyValue';
 
 export function syncAttributeValue(
   rootElement: HTMLElement,
@@ -43,6 +44,6 @@ export function syncAttributeValue(
 
   // if different re-sync DOM attribute value with internal property
   if (attributeValue != propertyValue) {
-    rootElement.setAttribute(attributeName, propertyValue);
+    rootElement.setAttribute(attributeName, stringifyValue(propertyValue));
   }
 }

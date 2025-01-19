@@ -9,11 +9,20 @@
 <body>
 <main>
 
-  <my-counter>
+  <my-counter count="0">
     <h1 x-countEl></h1>
     <button x-clickIncrement>Click Increment</button>
     <button x-hoverDecrement>Hover Decrement</button>
   </my-counter>
+
+  <hr />
+
+  <state-component state='{"msg":"Hello World","count":3}'>
+    <h1 x-stateCount></h1>
+    <input type="text" x-onMsgInput x-stateMsg />
+    <p x-stateJson></p>
+    <button x-clickIncrement>Increment</button>
+  </state-component>
 
 </main>
 <script src="/src/main.ts" type="module"></script>

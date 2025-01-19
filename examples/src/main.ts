@@ -1,2 +1,3 @@
 import './style.css';
-import './counter.ts';
+import './components/my-counter.ts';
+import './components/state-component.ts';

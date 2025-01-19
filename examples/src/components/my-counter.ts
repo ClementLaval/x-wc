@@ -1,5 +1,5 @@
 // @ts-ignore
-import { customElement, element, event, property } from '../../dist';
+import { customElement, element, event, property } from '../../../dist';
 
 @customElement('my-counter')
 export class Counter extends HTMLElement {
