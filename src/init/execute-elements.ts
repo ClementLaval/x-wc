@@ -24,7 +24,7 @@ export function executeElements<This>(
       element
     );
 
-    // execute for the first time elements
+    // execute element method by passing his DOM ref + index in NodeList as argument
     nodeList.forEach((node, index) => {
       originalMethod?.value.call(rootElement, node, index);
     });

@@ -1,6 +1,7 @@
 import type { Constructor, DecoratorMetadata, PropertyDecoratorMetadata } from '../types';
 import { convertAttribute } from '../convertors/convert-attribute';
 import { executeElements } from './execute-elements';
+import { syncAttributeValue } from './sync-attribute-value';
 
 /**
  * Update attributeChangedCallback:
@@ -37,14 +38,17 @@ export function initAttributeChangedCallback(
     newValue: string | null
   ) {
     // execute the existing attributeChangedCallback code before executing lib logic
-    const result = existingAttributeChangedCallback.apply(this, [
+    const result = existingAttributeChangedCallback.call(
+      this,
       name,
       oldValue,
-      newValue,
-    ]);
+      newValue
+    );
 
     // do not execute rest if previous code break it
     if (result === false || result === null) {
+      // re-sync attribute value with property if needed
+      syncAttributeValue(this, context, name);
       return;
     }
 
@@ -58,7 +62,7 @@ export function initAttributeChangedCallback(
 
     // if property not found
     if (!property) {
-      // let attribute
+      // let unknown attribute on DOM
       return;
     }
 
@@ -68,6 +72,7 @@ export function initAttributeChangedCallback(
     // if property is private (should never append, cause actually private property are not added to observedAttributes)
     if (property.private) {
       // TODO: find a way to re-sync DOM attribute with private property value
+      // we cannot re-sync attribute with private property because we can't access it value
       return;
     }
 

@@ -9,7 +9,7 @@ export function initDisconnectedCallback(
   const disconnectedCallback =
     target.prototype.disconnectedCallback ?? function () {};
 
-  target.prototype.connectedCallback = function () {
+  target.prototype.disconnectedCallback = function () {
     executeElements(this, context);
 
     // execute existing disconnectedCallback

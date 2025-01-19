@@ -11,7 +11,7 @@ export function initConnectedCallback(
 
   target.prototype.connectedCallback = function () {
     executeElements(this, context);
-
+    
     // execute existing connectedCallback
     connectedCallback.call(this);
   };

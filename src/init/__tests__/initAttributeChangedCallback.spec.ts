@@ -52,8 +52,8 @@ describe('initAttributeChangedCallback', () => {
     expect(customElementDOM.count).toBe(10);
     expect(typeof customElementDOM.count).toBe('number');
 
-    // Then DOM attribute is not re-sync with property
-    expect(customElementDOM.getAttribute('count')).toBe('12');
+    // Then DOM attribute re-sync with property
+    expect(customElementDOM.getAttribute('count')).toBe('10');
   });
 
   test('DOM attribute change should not update private property', () => {
