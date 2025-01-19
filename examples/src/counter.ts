@@ -1,4 +1,5 @@
-import { customElement, element, event, property } from 'x-wc';
+// @ts-ignore
+import { customElement, element, event, property } from '../../dist';
 
 @customElement('my-counter')
 export class Counter extends HTMLElement {
