@@ -1,5 +1,6 @@
 import type { Constructor } from '../types';
-import { executeElements } from './execute-elements';
+import { executeElements } from './helpers/execute-elements';
+import { registerEvents } from './helpers/register-events';
 
 export function initConnectedCallback(
   target: CustomElementConstructor,
@@ -11,7 +12,9 @@ export function initConnectedCallback(
 
   target.prototype.connectedCallback = function () {
     executeElements(this, context);
-    
+
+    registerEvents(this, context);
+
     // execute existing connectedCallback
     connectedCallback.call(this);
   };

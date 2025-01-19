@@ -1,7 +1,7 @@
 import type { Constructor, DecoratorMetadata, PropertyDecoratorMetadata } from '../types';
 import { convertAttribute } from '../convertors/convert-attribute';
-import { executeElements } from './execute-elements';
-import { syncAttributeValue } from './sync-attribute-value';
+import { executeElements } from './helpers/execute-elements';
+import { syncAttributeValue } from './helpers/sync-attribute-value';
 
 /**
  * Update attributeChangedCallback:

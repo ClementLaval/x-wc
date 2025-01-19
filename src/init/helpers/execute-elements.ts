@@ -1,5 +1,5 @@
-import type { Constructor, DecoratorMetadata } from '../types';
-import { Attribute } from '../attribute/attribute';
+import type { Constructor, DecoratorMetadata } from '../../types';
+import { Attribute } from '../../attribute/attribute';
 
 export function executeElements<This>(
   rootElement: HTMLElement,

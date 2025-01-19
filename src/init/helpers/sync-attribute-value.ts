@@ -2,7 +2,7 @@ import type {
   Constructor,
   DecoratorMetadata,
   PropertyDecoratorMetadata,
-} from '../types';
+} from '../../types';
 
 export function syncAttributeValue(
   rootElement: HTMLElement,

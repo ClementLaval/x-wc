@@ -1,23 +1,30 @@
-import { customElement, element, property } from 'x-wc';
+import { customElement, element, event, property } from 'x-wc';
 
 @customElement('my-counter')
 export class Counter extends HTMLElement {
   @property()
   accessor count = 2;
 
-  @element({
-    init: () => {},
-  })
+  @element()
   countEl(el: HTMLElement) {
     el.textContent = this.count.toString();
+
+    if (this.count % 2 === 0) {
+      el.style.color = 'red';
+    } else {
+      el.style.color = 'inherit';
+    }
   }
 
-  increment() {
+  @event('click')
+  clickIncrement(e: Event) {
+    console.log(e.target);
     this.count++;
   }
 
-  connectedCallback() {
-    console.log('toto');
-    this.increment();
+  @event('mouseover')
+  hoverDecrement(e: Event) {
+    console.log(e.target);
+    this.count--;
   }
 }

@@ -8,12 +8,12 @@ const defaultOptions: NodeDefinitionOptions = {};
 export const element =
   <T>(options: NodeDefinitionOptions = defaultOptions) =>
   (target: Function, context: ClassMethodDecoratorContext<T>) => {
-    // Ensure that node decorator is used on method
+    // Ensure that element decorator is used on method
     if (!['method'].includes(context.kind)) {
       throw new Error('element decorator must be used on method only.');
     }
 
-    // Ensure that class is named
+    // Ensure that method is named
     if (!context.name) {
       throw new Error(
         'Function must have a name. Anonymous functions are not allowed.'

@@ -1,5 +1,5 @@
 import type { Constructor } from '../types';
-import { executeElements } from './execute-elements';
+import { removeEvents } from './helpers/remove-events';
 
 export function initDisconnectedCallback(
   target: CustomElementConstructor,
@@ -10,7 +10,7 @@ export function initDisconnectedCallback(
     target.prototype.disconnectedCallback ?? function () {};
 
   target.prototype.disconnectedCallback = function () {
-    executeElements(this, context);
+    removeEvents(this, context);
 
     // execute existing disconnectedCallback
     disconnectedCallback.call(this);
